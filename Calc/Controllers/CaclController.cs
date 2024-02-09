@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using Microsoft.VisualBasic;
 
 namespace Calc.Controllers
 {
@@ -33,7 +34,7 @@ namespace Calc.Controllers
         {
             if (values.num2 == 0)
             {
-                return BadRequest("Делитель не может быть равен нулю");
+                return BadRequest("Операция с деление числа на ноль не возможна");
             }
             return Ok(Actions.Division(values));
         }
@@ -55,7 +56,7 @@ namespace Calc.Controllers
         {
             if (values.num1 < 0)
             {
-                return BadRequest();
+                return BadRequest("Операция с корнем из отрицательная числа не возможна");
             }
             return Ok(Actions.Sqrt(values));
         }
@@ -63,7 +64,14 @@ namespace Calc.Controllers
         [HttpPost("calcFromString")]
         public IActionResult Test([FromBody] Values values)
         {
-            return Ok(Actions.CalcFromString(values));
+            try
+            {
+                return Ok(Actions.CalcFromString(values));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
     }

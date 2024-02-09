@@ -19,8 +19,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       builder =>
                       {
-                          builder.WithOrigins("http://localhost:8080",
-                                              "http://www.contoso.com")
+                          builder.WithOrigins("http://localhost:8080")
                                                 .AllowAnyHeader()
                                                 .AllowAnyMethod();
                       });
@@ -33,18 +32,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseExceptionHandler("/error-development");
-}
-else
-{
-    app.UseExceptionHandler("/error");
 }
 
 app.UseCors(MyAllowSpecificOrigins);
 
 app.UseStatusCodePages();
-
-app.UseHttpsRedirection();
 
 app.MapControllers();
 

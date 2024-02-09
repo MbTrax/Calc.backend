@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System;
 using Microsoft.AspNetCore.Http.HttpResults;
+using DynamicExpresso;
 
 namespace Calc.Models
 {
@@ -8,7 +9,8 @@ namespace Calc.Models
     {
         public double CalcFromString(Values values)
         {
-            return Convert.ToDouble( new DataTable().Compute(values.str, null));
+            var interpreter = new Interpreter();
+            return Convert.ToDouble(interpreter.Eval(values.str));
         }
 
         public double Division(Values values)
